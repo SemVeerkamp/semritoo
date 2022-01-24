@@ -139,4 +139,4 @@ def refresh_predictions():
                            starttimes=starttimes,
                            user=current_user,
                            time_now=time_now
-                           ))
+                           )
