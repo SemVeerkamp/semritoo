@@ -132,5 +132,6 @@ def delete_prediction():
 def refresh_predictions():
     startlist, starttimes = get_startlist(year, tag)
     results, podium_pictures = get_result(year, tag)
+    flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
     return render_template("refresh_prediction.html",
                           user=current_user)
