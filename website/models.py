@@ -6,7 +6,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(150))
-    name = db.Column(db.String(150), primary_key=True)
+    name = db.Column(db.String(150), unique=True)
     predictions = db.relationship('Prediction')
 
 class Prediction(db.Model):
