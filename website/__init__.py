@@ -1,3 +1,9 @@
+from flask import Flask 
+
+from .commands import create_tables
+
+from .extensions import db, login_manager
+
 def create_app():
     app = Flask(__name__)
     
@@ -14,7 +20,6 @@ def create_app():
 
     from .models import User, Prediction
 
-    login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
