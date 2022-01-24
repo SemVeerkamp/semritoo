@@ -130,8 +130,13 @@ def delete_prediction():
 
 @views.route('/refresh_prediction', methods=['GET', 'POST'])
 def refresh_predictions():
+    time_now = datetime.now()
     startlist, starttimes = get_startlist(year, tag)
     results, podium_pictures = get_result(year, tag)
     flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
-    return render_template("refresh_prediction.html",
-                          user=current_user)
+    return render_template("home.html",
+                           startlist=startlist,
+                           starttimes=starttimes,
+                           user=current_user,
+                           time_now=time_now
+                           ))
