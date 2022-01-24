@@ -4,7 +4,7 @@ from .commands import create_tables
 
 from .extensions import db, login_manager
 
-def create_app():
+def create_app(config_file='settings.py'):
     app = Flask(__name__)
     
 
