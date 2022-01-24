@@ -1,0 +1,24 @@
+certifi==2021.10.8
+charset-normalizer==2.0.10
+click==8.0.3
+colorama==0.4.4
+docopt==0.6.2
+Flask==2.0.2
+Flask-Login==0.5.0
+Flask-SQLAlchemy==2.5.1
+gitdb==4.0.9
+GitPython==3.1.26
+greenlet==1.1.2
+idna==3.3
+itsdangerous==2.0.1
+Jinja2==3.0.3
+MarkupSafe==2.0.1
+pipreqs==0.4.11
+requests==2.27.1
+smmap==5.0.0
+SQLAlchemy==1.4.29
+urllib3==1.26.8
+Werkzeug==2.0.2
+yarg==0.1.9
+psycopg2-binary ==2.9.3
+gunicorn
