@@ -3,7 +3,7 @@ from flask import Flask
 from .commands import create_tables
 
 from .extensions import db, login_manager
-
+DB_NAME = "database.db"
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
     
