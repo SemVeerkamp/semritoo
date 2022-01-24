@@ -128,9 +128,9 @@ def delete_prediction():
 
     return jsonify({})
 
-@views.route('/refresh_prediction', methods=['POST'])
+@views.route('/refresh_prediction', methods=['GET', 'POST'])
 def refresh_predictions():
-    if request.method == ["POST"]:
-        startlist, starttimes = get_startlist(year, tag)
-        results, podium_pictures = get_result(year, tag)
-    return render_template("refresh_prediction.html")
+    startlist, starttimes = get_startlist(year, tag)
+    results, podium_pictures = get_result(year, tag)
+    return render_template("refresh_prediction.html",
+                          user=current_user)
