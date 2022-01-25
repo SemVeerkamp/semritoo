@@ -107,8 +107,8 @@ def stand():
                 if prediction.rider_one == results[event][1] or prediction.rider_two == results[event][1] or prediction.rider_three == \
                         results[event][1]:
                     scores[prediction.user_name] += 2
-                if prediction.rider_one == results[event][1] or prediction.rider_two == results[event][1] or prediction.rider_three == \
-                        results[event][1]:
+                if prediction.rider_one == results[event][2] or prediction.rider_two == results[event][2] or prediction.rider_three == \
+                        results[event][2]:
                     scores[prediction.user_name] += 1
     return render_template("stand.html",
                            user=current_user,
