@@ -1,16 +1,21 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 <h1 align="center">Vul hier je voorspellingen in</h1>
-<h4 align="left">Selecteer de bovenste kolom (de afstand) en selecteer je drie schaatsers die jij wilt kiezen. Klik daarna op bevestigen</h4>
+<h4 align="left">Druk op veld 'nothing selected' achter het grijze veld met de afstand waarvan je een voorspelling wilt toevoegen</h4>
 <br>
-<h4 align="left">Wil je je voorspelling veranderen? klik op het vraagteken achter je voorspelling om je vorige voorspelling te verwijderen. Zodra je je vorige voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
-
+<h4 allign="left">Vink altijd het bovenste vakje met de afstand aan. Het is verplicht dit veld aan te klikken.</h4>
+<br>
+<h4 allign="left">Bevestig je keuze met de bevestigingsknop</h4>
+<br> <br>
+<h2 allign="left">Wil je je voospelling veranderen?</h2>
+<h4 align="left">Klik op het kruisje achter je voorspelling om je oude voorspelling te verwijderen. Zodra je de oude voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
+<br> <br> <br>
 
 
 {% for event in startlist %}
     <form class="form-horizontal" method="POST" role="form">
         <div class="input-group">
-          <span class="input-group-addon">{{ event }}
+          <span class="input-group-addon">{{ event.partition('_')[2] }}
               <br> <br>
               {{ starttimes[loop.index0] }}</span>
              <select name='prediction' id="prediction"
@@ -19,7 +24,7 @@
               data-live-search="true">
                  <option
                      value="{{ event }}">
-                     {{ event }}
+                     {{ event.partition('_')[2] }}
                  </option>
                 {% for i in range(startlist[event]|count) %}
                 <option
