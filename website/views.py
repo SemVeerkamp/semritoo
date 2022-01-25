@@ -147,5 +147,7 @@ def refresh_predictions():
     return render_template("refresh_prediction.html",
                            startlist=startlist,
                            starttimes=starttimes,
-                           user=current_user
+                           results=results,
+                           podium_pictures=podium_pictures,
+                           user=current_user,
                            )
