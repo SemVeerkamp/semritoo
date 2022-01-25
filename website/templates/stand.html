@@ -3,7 +3,8 @@
 <h1 align="center">Bekijk hier de stand</h1>
 
 {% for players in scores %}
-    {{players}} {{scores[players]}}
+<h2 allign="left>">{{players}} {{scores[players]}}</h2>
+<h4 allign="left>">{{ scores_per_user[players] }}</h4>
 <br>
 {% endfor %}
 
