@@ -93,26 +93,37 @@ def voorspellingen():
 
 @views.route('/stand', methods=['GET', 'POST'])
 def stand():
+    gold = 4
+    silver = 2
+    bronze = 1
     scores = {}
+    scores_per_user = {}
     users = User.query.order_by(User.name).all()
     for user in users:
         scores[user.name] = 0
+        scores_per_user[user.name] = {}
     predictions = Prediction.query.order_by(Prediction.event).all()
     for prediction in predictions:
         for event in results:
             if prediction.event == event:
-                if prediction.rider_one == results[event][0] or prediction.rider_two == results[event][0] or prediction.rider_three == \
-                        results[event][0]:
-                    scores[prediction.user_name] += 4
-                if prediction.rider_one == results[event][1] or prediction.rider_two == results[event][1] or prediction.rider_three == \
-                        results[event][1]:
-                    scores[prediction.user_name] += 2
-                if prediction.rider_one == results[event][2] or prediction.rider_two == results[event][2] or prediction.rider_three == \
-                        results[event][2]:
-                    scores[prediction.user_name] += 1
+                scores_per_user[prediction.user_name][event.partition('_')[2]] = 0
+                if prediction.rider_one == results[event][0] or prediction.rider_two == results[event][0] or \
+                        prediction.rider_three == results[event][0]:
+                    scores[prediction.user_name] += gold
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += gold
+                if prediction.rider_one == results[event][1] or prediction.rider_two == results[event][1] or \
+                        prediction.rider_three == results[event][1]:
+                    scores[prediction.user_name] += silver
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += silver
+                if prediction.rider_one == results[event][2] or prediction.rider_two == results[event][2] or \
+                        prediction.rider_three == results[event][2]:
+                    scores[prediction.user_name] += bronze
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
+
     return render_template("stand.html",
                            user=current_user,
-                           scores=scores
+                           scores=scores,
+                           scores_per_user=scores_per_user
                            )
 
 
