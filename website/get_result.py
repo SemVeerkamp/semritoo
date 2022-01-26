@@ -49,15 +49,15 @@ def get_result(year, tag):
 
                         names.append(Full_name)
                         times.append(time)
-                    key2 = "team"
-                    if key2 in response_result_dict[j]:
-                        Full_name = str(response_result_dict[j]['team']['country']
-                                        + " "
-                                        )
-                        time = str(response_result_dict[j]['time']
-                                   )
-                        names.append(Full_name)
-                        times.append(time)
+#                    key2 = "team"
+#                    if key2 in response_result_dict[j]:
+#                        Full_name = str(response_result_dict[j]['team']['country']
+#                                        + " "
+#                                        )
+#                        time = str(response_result_dict[j]['time']
+#                                   )
+#                        names.append(Full_name)
+#                        times.append(time)
                 else:
                     key = 'competitor'
                     if key in response_result_dict[j]:
