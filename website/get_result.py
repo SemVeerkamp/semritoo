@@ -64,9 +64,9 @@ def get_result(year, tag):
                             names.append(Full_name)
                             times.append(time)
 
-                results[str("startlist_" + events[i])] = names
-                result_times[str("startlist_" + events[i])] = times
-                podium_pictures[str("startlist_" + events[i])] = podium_event
+                    results[str("startlist_" + events[i])] = names
+                    result_times[str("startlist_" + events[i])] = times
+                    podium_pictures[str("startlist_" + events[i])] = podium_event
         names = []
         podium_event = []
         times = []
