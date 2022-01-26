@@ -120,11 +120,15 @@ def stand():
                         prediction.rider_three == results[event][2]:
                     scores[prediction.user_name] += bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
+    users = list(scores_per_user.keys())
+    events = list(scores_per_user.values())[0]
 
     return render_template("stand.html",
                            user=current_user,
                            scores=scores,
-                           scores_per_user=scores_per_user
+                           scores_per_user=scores_per_user,
+                           users=users,
+                           events=events
                            )
 
 
