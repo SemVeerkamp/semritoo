@@ -151,3 +151,11 @@ def refresh_predictions():
                            podium_pictures=podium_pictures,
                            user=current_user,
                            )
+
+
+@views.route('/spelregels', methods = ["GET", "POST"])
+def spelregels():
+    return render_template('/spelregels.html',
+                           user=current_user
+                           )
+
