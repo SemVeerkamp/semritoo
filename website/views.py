@@ -103,10 +103,11 @@ def stand():
     for user in users:
         scores[user.name] = 0
         scores_per_user[user.name] = {}
+        for event in results:
+            scores_per_user[user.name][event.partition('_')[2]] = 0
     predictions = Prediction.query.order_by(Prediction.event).all()
     for prediction in predictions:
         for event in results:
-            scores_per_user[prediction.user_name][event.partition('_')[2]] = 0
             if prediction.event == event:
                 if prediction.rider_one == results[event][0] or prediction.rider_two == results[event][0] or \
                         prediction.rider_three == results[event][0]:
@@ -120,6 +121,7 @@ def stand():
                         prediction.rider_three == results[event][2]:
                     scores[prediction.user_name] += bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
+
     users = list(scores_per_user.keys())
     events = list(scores_per_user.values())[0]
 
