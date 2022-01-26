@@ -5,7 +5,7 @@
 {% for players in scores %}
 <h2 allign="left>">{{players}}:{{scores[players]}}</h2>
 {% for key, value in scores_per_user[players].items() %}
-{{ key }}:{{ value }}
+{{ key }}:{{ value }}||
 
 {% endfor %}
 {% endfor %}
