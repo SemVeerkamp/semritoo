@@ -35,10 +35,11 @@ def get_startlist(year,tag):
                                     + ")"
                                     )
                     names.append(Full_name)
+                    startlist[str("startlist_" + events[i])] = names
 #                key2 = 'team'
 #                if key2 in response_startlist_dict[j]:
 #                    Full_name = str(response_startlist_dict[j]['team']['country'])
 #                    names.append(Full_name)
-                startlist[str("startlist_" + events[i])] = names
+
         names = []
     return startlist, starttimes
