@@ -14,7 +14,7 @@ from website.tournament import year, tag
 views = Blueprint('views', __name__)
 
 startlist, starttimes = get_startlist(year, tag)
-results, podium_pictures = get_result(year, tag)
+results, podium_pictures, result_times = get_result(year, tag)
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -74,7 +74,8 @@ def uitslagen():
     return render_template("uitslagen.html",
                            results=results,
                            podium_pictures=podium_pictures,
-                           user=current_user
+                           user=current_user,
+                           result_times=result_times
                            )
 
 
@@ -142,7 +143,7 @@ def delete_prediction():
 @views.route('/refresh_prediction', methods=['GET', 'POST'])
 def refresh_predictions():
     startlist, starttimes = get_startlist(year, tag)
-    results, podium_pictures = get_result(year, tag)
+    results, podium_pictures, result_times = get_result(year, tag)
     flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
     return render_template("refresh_prediction.html",
                            startlist=startlist,
@@ -150,6 +151,7 @@ def refresh_predictions():
                            results=results,
                            podium_pictures=podium_pictures,
                            user=current_user,
+                           result_times=result_times
                            )
 
 
