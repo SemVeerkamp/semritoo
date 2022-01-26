@@ -106,8 +106,8 @@ def stand():
     predictions = Prediction.query.order_by(Prediction.event).all()
     for prediction in predictions:
         for event in results:
+            scores_per_user[prediction.user_name][event.partition('_')[2]] = 0
             if prediction.event == event:
-                scores_per_user[prediction.user_name][event.partition('_')[2]] = 0
                 if prediction.rider_one == results[event][0] or prediction.rider_two == results[event][0] or \
                         prediction.rider_three == results[event][0]:
                     scores[prediction.user_name] += gold
