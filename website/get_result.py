@@ -4,9 +4,9 @@ import requests
 import json
 
 
-def get_result(year,tag):
+def get_result(year, tag):
     event_code = get_event_code(year, tag)
-    scheduleNumbers, events_with_spaces, starttimes = get_events(year,tag)
+    scheduleNumbers, events_with_spaces, starttimes = get_events(year, tag)
     events = []
     for q in events_with_spaces:
         r = q.replace(' ', '')
@@ -15,6 +15,8 @@ def get_result(year,tag):
     # Get the results
     results = {}
     names = []
+    result_times = {}
+    times = []
     podium_pictures = {}
     podium_event = []
 
@@ -37,21 +39,25 @@ def get_result(year,tag):
                                         + "   ("
                                         + response_result_dict[j]['competitor']['skater']['country']
                                         + ")"
-    #                                    + response_result_dict[j]['time']
                                         )
+                        time = str(response_result_dict[j]['time']
+                                   )
                         if j < 3:
                             podium_url = response_result_dict[j]['competitor']['skater']['photo']
                             podium_event.append(podium_url)
                             podium_url = None
 
                         names.append(Full_name)
+                        times.append(time)
                     key2 = "team"
                     if key2 in response_result_dict[j]:
                         Full_name = str(response_result_dict[j]['team']['country']
-                                        +" "
-    #                                    + response_result_dict[j]['time']
-                                                            )
+                                        + " "
+                                        )
+                        time = str(response_result_dict[j]['time']
+                                   )
                         names.append(Full_name)
+                        times.append(time)
                 else:
                     key = 'competitor'
                     if key in response_result_dict[j]:
@@ -62,13 +68,19 @@ def get_result(year,tag):
                                         + response_result_dict[j]['competitor']['skater']['country']
                                         + ") "
                                         )
+                        time = "geen tijd"
                         names.append(Full_name)
+                        times.append(time)
                     key2 = "team"
                     if key2 in response_result_dict[j]:
                         Full_name = str(response_result_dict[j]['team']['country'])
+                        time = "geen tijd"
                         names.append(Full_name)
+                        times.append(time)
             results[str("startlist_" + events[i])] = names
+            result_times[str("startlist_" + events[i])] = times
             podium_pictures[str("startlist_" + events[i])] = podium_event
         names = []
         podium_event = []
-    return results, podium_pictures
+        times = []
+    return results, podium_pictures, result_times
