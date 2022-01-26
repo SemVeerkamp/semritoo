@@ -1,12 +1,31 @@
-{% extends "base.html" %} {% block title %}De stand{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
 
 <h1 align="center">Bekijk hier de stand</h1>
 
 {% for players in scores %}
-<h2 allign="left>">{{players}}:{{scores[players]}}</h2>
-{% for key, value in scores_per_user[players].items() %}
-{{ key }}:{{ value }}||
+<h2 allign="left>">{{players}} {{scores[players]}}</h2>
+{% endfor %}
 
-{% endfor %}
-{% endfor %}
+<table>
+    <thead>
+        <tr>
+            <th class="c1">Gebruiker</th>
+            {% for event in events %}
+            <th>{{ event}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td class="c2">{{user}}</td>
+            {% for event in scores_per_user[user] %}
+            <td class="c2">{{scores_per_user[user][event]}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}  
+    </tbody>
+</table>
+
 {% endblock %}
