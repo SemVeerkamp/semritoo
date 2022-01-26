@@ -30,9 +30,10 @@ def get_result(year, tag):
         response_result_dict = json.loads(response_result.text)
         for j in range(len(response_result_dict)):
             if response_result_dict[j]:
-                if response_result_dict[j]['time'] is not None:
-                    key = 'competitor'
-                    if key in response_result_dict[j]:
+                key = 'competitor'
+                if key in response_result_dict[j]:
+                    if response_result_dict[j]['time'] is not None:
+
                         Full_name = str(response_result_dict[j]['competitor']['skater']['firstName']
                                         + " "
                                         + response_result_dict[j]['competitor']['skater']['lastName']
@@ -49,37 +50,23 @@ def get_result(year, tag):
 
                         names.append(Full_name)
                         times.append(time)
-#                    key2 = "team"
-#                    if key2 in response_result_dict[j]:
-#                        Full_name = str(response_result_dict[j]['team']['country']
-#                                        + " "
-#                                        )
-#                        time = str(response_result_dict[j]['time']
-#                                   )
-#                        names.append(Full_name)
-#                        times.append(time)
-                else:
-                    key = 'competitor'
-                    if key in response_result_dict[j]:
-                        Full_name = str(response_result_dict[j]['competitor']['skater']['firstName']
-                                        + " "
-                                        + response_result_dict[j]['competitor']['skater']['lastName']
-                                        + "   ("
-                                        + response_result_dict[j]['competitor']['skater']['country']
-                                        + ") "
-                                        )
-                        time = "geen tijd"
-                        names.append(Full_name)
-                        times.append(time)
-#                    key2 = "team"
-#                    if key2 in response_result_dict[j]:
-#                        Full_name = str(response_result_dict[j]['team']['country'])
-#                        time = "geen tijd"
-#                        names.append(Full_name)
-#                        times.append(time)
-            results[str("startlist_" + events[i])] = names
-            result_times[str("startlist_" + events[i])] = times
-            podium_pictures[str("startlist_" + events[i])] = podium_event
+                    else:
+                        key = 'competitor'
+                        if key in response_result_dict[j]:
+                            Full_name = str(response_result_dict[j]['competitor']['skater']['firstName']
+                                            + " "
+                                            + response_result_dict[j]['competitor']['skater']['lastName']
+                                            + "   ("
+                                            + response_result_dict[j]['competitor']['skater']['country']
+                                            + ") "
+                                            )
+                            time = "geen tijd"
+                            names.append(Full_name)
+                            times.append(time)
+
+                results[str("startlist_" + events[i])] = names
+                result_times[str("startlist_" + events[i])] = times
+                podium_pictures[str("startlist_" + events[i])] = podium_event
         names = []
         podium_event = []
         times = []
