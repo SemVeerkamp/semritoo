@@ -48,9 +48,11 @@
                 {{ prediction.rider_one }}
                 {{ prediction.rider_two }}
                 {{ prediction.rider_three }}
+                {% if starttimes[loop.index0] < time_now %}
                     <button type="button" class="close" onClick="deletePrediction({{ prediction.id }})">
                          <span aria-hidden="true">&times;</span>
                     </button>
+                {% endif %}
             </li>
           {% endif %}
         {% endfor %}
