@@ -4,9 +4,9 @@ import requests
 import json
 
 
-def get_startlist(year,tag):
+def get_startlist(year, tag):
     event_code = get_event_code(year, tag)
-    scheduleNumbers, events_with_spaces, starttimes = get_events(year,tag)
+    scheduleNumbers, events_with_spaces, starttimes = get_events(year, tag)
     events = []
     for q in events_with_spaces:
         r = q.replace(' ', '')
@@ -16,30 +16,34 @@ def get_startlist(year,tag):
     startlist = {}
     names = []
     for i in range(len(scheduleNumbers)):
-        response_startlist = requests.get('https://api.isuresults.eu/events/'
-                                          + event_code
-                                          + '/competitions/'
-                                          + scheduleNumbers[i]
-                                          + '/start-list/'
-                                          )
-        response_startlist_dict = json.loads(response_startlist.text)
-        for j in range(len(response_startlist_dict)):
-            if response_startlist_dict[j]:
-                key= 'competitor'
-                if key in response_startlist_dict[j]:
-                    Full_name = str(response_startlist_dict[j]['competitor']['skater']['firstName']
-                                    + " "
-                                    + response_startlist_dict[j]['competitor']['skater']['lastName']
-                                    + "   ("
-                                    + response_startlist_dict[j]['competitor']['skater']['country']
-                                    + ")"
-                                    )
-                    names.append(Full_name)
-                    startlist[str("startlist_" + events[i])] = names
-#                key2 = 'team'
-#                if key2 in response_startlist_dict[j]:
-#                    Full_name = str(response_startlist_dict[j]['team']['country'])
-#                    names.append(Full_name)
+        quarter = "Quarter"
+        semi = "Semi"
+        if quarter not in events[i]:
+            if semi not in events[i]:
+                response_startlist = requests.get('https://api.isuresults.eu/events/'
+                                                  + event_code
+                                                  + '/competitions/'
+                                                  + scheduleNumbers[i]
+                                                  + '/start-list/'
+                                                  )
+                response_startlist_dict = json.loads(response_startlist.text)
+                for j in range(len(response_startlist_dict)):
+                    if response_startlist_dict[j]:
+                        key = 'competitor'
+                        if key in response_startlist_dict[j]:
+                            Full_name = str(response_startlist_dict[j]['competitor']['skater']['firstName']
+                                            + " "
+                                            + response_startlist_dict[j]['competitor']['skater']['lastName']
+                                            + "   ("
+                                            + response_startlist_dict[j]['competitor']['skater']['country']
+                                            + ")"
+                                            )
+                            names.append(Full_name)
+                            startlist[str("startlist_" + events[i])] = names
+        #                key2 = 'team'
+        #                if key2 in response_startlist_dict[j]:
+        #                    Full_name = str(response_startlist_dict[j]['team']['country'])
+        #                    names.append(Full_name)
 
         names = []
     return startlist, starttimes
