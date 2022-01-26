@@ -21,11 +21,33 @@
         <tr>
             <td class="c2">{{user}}</td>
             {% for event in scores_per_user[user] %}
+            {% if scores_per_user[user][event] > 6 %}
+            <td class="c2" style ="background-color: green">{{scores_per_user[user][event]}}</td>
+            {% elif scores_per_user[user][event] > 5 %}
+            <td class="c2" style ="background-color: lime">{{scores_per_user[user][event]}}</td>
+            {% elif scores_per_user[user][event] > 3 %}
+            <td class="c2" style ="background-color: chartreuse">{{scores_per_user[user][event]}}</td>
+            {% elif scores_per_user[user][event] > 2 %}
+            <td class="c2" style ="background-color: greenyellow">{{scores_per_user[user][event]}}</td>
+            {% elif scores_per_user[user][event] > 1 %}
+            <td class="c2" style ="background-color: yellow">{{scores_per_user[user][event]}}</td>
+            {% elif scores_per_user[user][event] == 1 %}
+            <td class="c2" style ="background-color: gold">{{scores_per_user[user][event]}}</td>
+            {% else %}
             <td class="c2">{{scores_per_user[user][event]}}</td>
+            {% endif %}
             {% endfor %}
         </tr>
-        {% endfor %}  
+        {% endfor %}
     </tbody>
 </table>
 
+<h4>Legenda:</h4>
+<h5 style="background-color:green">Goud, zilver & brons</h5>
+<h5 style="background-color:lime">Goud & zilver</h5>
+<h5 style="background-color:chartreuse">Goud & brons</h5>
+<h5 style="background-color:greenyellow">Zilver & brons</h5>
+<h5 style="background-color:yellow">Zilver</h5>
+<h5 style="background-color:gold">Brons</h5>
+<h5>Helemaal niets</h5>
 {% endblock %}
