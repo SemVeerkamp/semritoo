@@ -1,17 +1,58 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}De stand{% endblock %} {% block content %}
 
-<h1 align="center">Bekijk hier de stand</h1>
+<style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/uEGQLrm3FRQggtH6DsLICiAfbz3-EUmlJqq_WtJVBoPjblYx7KyhVrcUOKpP8wnMT5vXBOiHTuVGqZRjxAhhIENrR6NDRqZ58MF5nlp7IRmf4Rnz1HUOcTisFh9dWpGcd_CuxVmBEg=w2400');
+        background-repeat: no repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    .contain {
+        width: 100%;
+        height: 100%;
+}
+    .box {
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 10px;
+        width: 500px;
+        background-color: #fff;
+        opacity: 0.75;
+}
+    .box_legend {
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 10px;
+        width: 500px;
+        background-color: #fff;
+        opacity: 0.9;
+}
+    .box_table {
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 10px;
+        width: 1250px;
+        background-color: #fff;
+        opacity: 0.85;
+}
+</style>
 
-{% for players in scores %}
-<h2 allign="left>">{{players}} {{scores[players]}}</h2>
-{% endfor %}
+<div class="contain" align="center">
+    <div class="box">
+        {% for x in range(scores|count) %}
+        <h1 allign="left>">{{ x+1 }}.&nbsp{{ scores[x][0] }}</h1> <h3 align="center">{{ scores[x][1] }}</h3>
+        {% endfor %}
+    </div>
+</div>
 
-<table border="3">
+<div class="contain" align="left">
+    <div class="box_table">
+<table border="3", align="center">
     <thead>
         <tr>
-            <th class="c1">Gebruiker</th>
+            <th class="c1" style ="background-color: white">Gebruiker</th>
             {% for event in events %}
-            <th>{{ event}}</th>
+            <th style ="background-color: white">{{ event}}</th>
             {% endfor %}
         </tr>
     </thead>
@@ -19,7 +60,7 @@
     <tbody>
         {% for user in users %}
         <tr>
-            <td class="c2">{{user}}</td>
+            <td class="c2"style ="background-color: white">{{user}}</td>
             {% for event in scores_per_user[user] %}
             {% if scores_per_user[user][event] > 6 %}
             <td class="c2" style ="background-color: green">{{scores_per_user[user][event]}}</td>
@@ -34,20 +75,25 @@
             {% elif scores_per_user[user][event] == 1 %}
             <td class="c2" style ="background-color: gold">{{scores_per_user[user][event]}}</td>
             {% else %}
-            <td class="c2">{{scores_per_user[user][event]}}</td>
+            <td class="c2" style ="background-color: white">{{scores_per_user[user][event]}}</td>
             {% endif %}
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-<h4>Legenda:</h4>
-<h5 style="background-color:green">Goud, zilver & brons</h5>
-<h5 style="background-color:lime">Goud & zilver</h5>
-<h5 style="background-color:chartreuse">Goud & brons</h5>
-<h5 style="background-color:greenyellow">Zilver & brons</h5>
-<h5 style="background-color:yellow">Zilver</h5>
-<h5 style="background-color:gold">Brons</h5>
-<h5>Helemaal niets</h5>
+    </div>
+</div>
+<div class="contain" align="center">
+    <div class="box_legend">
+        <h4>Legenda:</h4>
+        <h5 style="background-color:green">Goud, zilver & brons</h5>
+        <h5 style="background-color:lime">Goud & zilver</h5>
+        <h5 style="background-color:chartreuse">Goud & brons</h5>
+        <h5 style="background-color:greenyellow">Zilver & brons</h5>
+        <h5 style="background-color:yellow">Zilver</h5>
+        <h5 style="background-color:gold">Brons</h5>
+        <h5>Helemaal niets</h5>
+    </div>
+</div>
 {% endblock %}
