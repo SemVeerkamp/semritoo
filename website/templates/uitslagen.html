@@ -1,21 +1,48 @@
 {% extends "base.html" %} {% block title %}uitslagen{% endblock %} {% block content %}
+
+<style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/VWa9AQFRp8ecqYmUsF9dw2eclbL-KtotImMzQPXb6dLYjiclmehbxWVC2c_lW5t5a2goUgZHuTeTUtPokPCAB2FDbgkJDT5Had2DUJtkr7qi72BH22hZBaPPvCZtS3I5bKGXUoOecg=w2400');
+        background-repeat: no repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    .contain {
+        width: 100%;
+        height: 100%;
+}
+    .box {
+        border: 1px solid #fff;
+        border-radius: 10px;
+        padding: 10px;
+        width: 1250px;
+        background-color: #fff;
+        opacity: 0.9;
+}
+</style>
+
 <h1 align="center">Bekijk hier de uitslagen</h1>
 <h4 align="left">Zodra de uitslagen van de wedstrijden bekent zijn verschijnen ze hier</h4>
-
 {% for result in results %}
-    <br>
-    <h1>{{result}}</h1>
+<div class="contain" align="center">
+    <div class="box">
+            <br>
+            <h1>{{result.partition('_')[2]}}</h1>
 
-    <br>
-    {% for j in range(results[result]|count) %}
-        {% if j < 3 %}
-            <img src={{podium_pictures[result][j]}}
-             style="width:100px;height:100px;">
-        {% endif %}
-        <p1 align="center">{{j+1}}.{{results[result][j]}}  :   {{result_times[result][j]}} </p1>
-        <br>
-    {% endfor %}
+            <br>
+            {% for j in range(results[result]|count) %}
+                {% if j < 3 %}
+                    <img src={{podium_pictures[result][j]}}
+                     style="width:100px;height:100px;">
+                {% endif %}
+                {% if j == 3 %}
+                    <br>
+                {% endif %}
+                <p1 align="left">{{j+1}}.{{results[result][j]}}  :   {{result_times[result][j]}} </p1>
 
+            {% endfor %}
+    </div>
+</div>
+<br><br><br>
 {% endfor %}
-
 {% endblock %}
