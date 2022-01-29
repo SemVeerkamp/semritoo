@@ -122,12 +122,13 @@ def stand():
                     scores[prediction.user_name] += bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
 
+    scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     users = list(scores_per_user.keys())
     events = list(scores_per_user.values())[0]
 
     return render_template("stand.html",
                            user=current_user,
-                           scores=scores,
+                           scores=scores_sorted,
                            scores_per_user=scores_per_user,
                            users=users,
                            events=events
