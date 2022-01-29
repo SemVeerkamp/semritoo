@@ -23,12 +23,9 @@
                 {% if prediction.event == event %}
                     {{ prediction.user_name }}
                     :
-                    <br>
-                    1.
-                    {{ prediction.rider_one }}
-                    2.
-                    {{ prediction.rider_two }}
-                    3.
+                    <br>            
+                    {{ prediction.rider_one }}                    
+                    {{ prediction.rider_two }}                    
                     {{ prediction.rider_three }}
                 </li>
                 {% endif %}
