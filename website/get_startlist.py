@@ -46,4 +46,4 @@ def get_startlist(year, tag):
         #                    names.append(Full_name)
 
         names = []
-    return startlist, starttimes
+    return startlist, starttimes, events
