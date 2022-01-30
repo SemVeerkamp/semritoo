@@ -152,7 +152,9 @@ def refresh_predictions():
                            results=results,
                            podium_pictures=podium_pictures,
                            user=current_user,
-                           result_times=result_times
+                           result_times=result_times,
+                           scheduled_events=scheduled_events,
+                           scheduled_starttimes=scheduled_starttimes
                            )
 
 
