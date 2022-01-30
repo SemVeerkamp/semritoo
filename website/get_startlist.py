@@ -46,4 +46,15 @@ def get_startlist(year, tag):
         #                    names.append(Full_name)
 
         names = []
-    return startlist, starttimes, events
+    scheduled_events = []
+    scheduled_starttimes = []
+    quarter = 'Quarter'
+    semi = 'Semi'
+    team = 'Team'
+    for index, event in enumerate(events):
+        if quarter not in event:
+            if semi not in event:
+                if team not in event:
+                    scheduled_events.append(event)
+                    scheduled_starttimes.append(starttimes[index])
+    return startlist, starttimes, events, scheduled_starttimes, scheduled_events
