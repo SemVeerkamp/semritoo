@@ -13,7 +13,7 @@ from website.tournament import year, tag
 
 views = Blueprint('views', __name__)
 
-startlist, starttimes, events = get_startlist(year, tag)
+startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
 results, podium_pictures, result_times = get_result(year, tag)
 
 
@@ -27,7 +27,8 @@ def home():
         event = str(prediction[0])
         if len(prediction) < 4:
             flash(
-                'Je hebt niet het goede aantal vakjes geselecteerd. Selecteer de afstand (bovenste veld) en je drie schaatsers en probeer het opnieuw',
+                'Je hebt niet het goede aantal vakjes geselecteerd. Selecteer de afstand (bovenste veld) '
+                'en je drie schaatsers en probeer het opnieuw',
                 category='error')
         elif len(prediction[0]) < 9:
             flash("Selecteer eerst de startlist_afstand (en je drie rijders) voordat je je voorspelling opslaat",
@@ -41,7 +42,8 @@ def home():
                 a.append(voorspelling.event)
             if event in a:
                 flash(
-                    "Voor deze afstand heb je al een voorspelling ingevuld. Als je je voorspelling wilt veranderen verwijder dan eerste de oude voorspelling",
+                    "Voor deze afstand heb je al een voorspelling ingevuld. Als je je voorspelling wilt veranderen "
+                    "verwijder dan eerste de oude voorspelling",
                     category="error")
             else:
                 event = str(prediction[0])
@@ -65,7 +67,9 @@ def home():
                            starttimes=starttimes,
                            user=current_user,
                            time_now=time_now,
-                           events=events
+                           events=events,
+                           scheduled_events=scheduled_events,
+                           scheduled_starttimes=scheduled_starttimes
                            )
 
 
@@ -122,7 +126,6 @@ def stand():
                         prediction.rider_three == results[event][2]:
                     scores[prediction.user_name] += bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
-
     scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     users = list(scores_per_user.keys())
     events = list(scores_per_user.values())[0]
@@ -132,7 +135,24 @@ def stand():
                            scores=scores_sorted,
                            scores_per_user=scores_per_user,
                            users=users,
-                           events=events
+                           events=events,
+                           scheduled_events=scheduled_events,
+                           scheduled_starttimes=scheduled_starttimes
+                           )
+
+
+@views.route('/refresh_prediction', methods=['GET', 'POST'])
+def refresh_predictions():
+    startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
+    results, podium_pictures, result_times = get_result(year, tag)
+    flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
+    return render_template("refresh_prediction.html",
+                           startlist=startlist,
+                           starttimes=starttimes,
+                           results=results,
+                           podium_pictures=podium_pictures,
+                           user=current_user,
+                           result_times=result_times
                            )
 
 
@@ -148,21 +168,6 @@ def delete_prediction():
 
     return jsonify({})
 
-@views.route('/refresh_prediction', methods=['GET', 'POST'])
-def refresh_predictions():
-    startlist, starttimes = get_startlist(year, tag)
-    results, podium_pictures, result_times = get_result(year, tag)
-    flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
-    return render_template("refresh_prediction.html",
-                           startlist=startlist,
-                           starttimes=starttimes,
-                           results=results,
-                           podium_pictures=podium_pictures,
-                           user=current_user,
-                           result_times=result_times,
-                           events=events
-                           )
-
 
 @views.route('/spelregels', methods = ["GET", "POST"])
 def spelregels():
@@ -170,3 +175,11 @@ def spelregels():
                            user=current_user
                            )
 
+
+
+# delete all the prediction from everybody (clean the database)
+#    predictions = Prediction.query.order_by(Prediction.id).all()
+#    print(predictions)
+#    for prediction in predictions:
+#        db.session.delete(prediction)
+#        db.session.commit()
