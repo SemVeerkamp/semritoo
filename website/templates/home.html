@@ -61,6 +61,8 @@
   <br />  <br />  <br />  <br />
 {% endfor %}
 
+
+<h4 allign="left">Alle evenementen die voorspeld moeten worden (en de deadlines daarachter). Zodra de startlijsten bekend zijn word het mogelijk de voorspellingen per afstand in te vullen.
 {% for event in scheduled_events %}
     {{event}}<br> {{ scheduled_starttimes[loop.index0] }} <br>
 {% endfor %}
