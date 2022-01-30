@@ -14,10 +14,10 @@
 <br> <br> <br>
 
 
-{% for event in events %}
+{% for event in startlist %}
     <form class="form-horizontal" method="POST" role="form">
         <div class="input-group">
-          <span class="input-group-addon">{{ event }}
+          <span class="input-group-addon">{{ event.partition('_')[2] }}
               <br> <br>
               {{ starttimes[loop.index0] }}</span>
              <select name='prediction' id="prediction"
