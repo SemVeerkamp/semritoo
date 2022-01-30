@@ -20,11 +20,10 @@
         opacity: 0.9;
 }
 </style>
-
-<h1 align="center">Bekijk hier de uitslagen</h1>
-{% for result in results %}
 <div class="contain" align="center">
     <div class="box">
+<h1 align="center">Bekijk hier de uitslagen</h1>
+{% for result in results %}
             <br>
             <h1>{{result.partition('_')[2]}}</h1>
 
