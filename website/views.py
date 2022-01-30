@@ -13,7 +13,7 @@ from website.tournament import year, tag
 
 views = Blueprint('views', __name__)
 
-startlist, starttimes = get_startlist(year, tag)
+startlist, starttimes, events = get_startlist(year, tag)
 results, podium_pictures, result_times = get_result(year, tag)
 
 
@@ -64,7 +64,8 @@ def home():
                            startlist=startlist,
                            starttimes=starttimes,
                            user=current_user,
-                           time_now=time_now
+                           time_now=time_now,
+                           events=events
                            )
 
 
@@ -158,7 +159,8 @@ def refresh_predictions():
                            results=results,
                            podium_pictures=podium_pictures,
                            user=current_user,
-                           result_times=result_times
+                           result_times=result_times,
+                           events=events
                            )
 
 
