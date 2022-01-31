@@ -6,6 +6,7 @@ from website import db
 import requests
 import json
 from datetime import datetime
+from datetime import timedelta
 
 from website.get_startlist import get_startlist
 from website.get_result import get_result
