@@ -32,7 +32,7 @@
     {{ event }}
     <br> <br>
   </span>
-    {% if starttimes[loop.index0] < time_now %}
+    {% if starttimes[loop.index0] > time_now %}
             {% for prediction in predictions %}
                 <li class="list-group-item">
                 {% if prediction.event == event %}
