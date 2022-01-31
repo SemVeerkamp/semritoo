@@ -25,17 +25,17 @@
 
 <div class="contain" align="center">
     <div class="box">
-
-<h1 align="center">Vul hier je voorspellingen in</h1>
-<h4 align="left">Druk op veld 'nothing selected' achter het grijze veld met de afstand waarvan je een voorspelling wilt toevoegen</h4>
-<br>
-<h4 allign="left">Vink altijd het bovenste vakje met de afstand aan. Het is verplicht dit veld aan te klikken.</h4>
-<br>
-<h4 allign="left">Bevestig je keuze met de bevestigingsknop</h4>
-<br> <br>
-<h2 allign="left">Wil je je voospelling veranderen?</h2>
-<h4 align="left">Klik op het kruisje achter je voorspelling om je oude voorspelling te verwijderen. Zodra je de oude voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
-<br> <br> <br>
+        <h1 align="center">Vul hier je voorspellingen in</h1>
+        <h4 align="left">Druk op veld 'nothing selected' achter het grijze veld met de afstand waarvan je een voorspelling wilt toevoegen</h4>
+        <br>
+        <h4 allign="left">Vink altijd het bovenste vakje met de afstand aan. Het is verplicht dit veld aan te klikken.</h4>
+        <br>
+        <h4 allign="left">Bevestig je keuze met de bevestigingsknop</h4>
+        <br> <br>
+        <h2 allign="left">Wil je je voospelling veranderen?</h2>
+        <h4 align="left">Klik op het kruisje achter je voorspelling om je oude voorspelling te verwijderen. Zodra je de oude voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
+    </div>
+</div>
 
 {% for event in startlist %}
     <form class="form-horizontal" method="POST" role="form">
@@ -69,37 +69,26 @@
             <button class="btn btn-default" type="submit" id="bevestigen">Bevestigen</button>
             </span>
         {% endif %}
-        </div>
-        </form>
-        {% for prediction in user.predictions %}
-            <li class="list-group-item">
-          {% if prediction.event == event %}
-                {{ prediction.rider_one }}
-                {{ prediction.rider_two }}
-                {{ prediction.rider_three }}
-                {% if starttimes[loop.index0] < time_now %}
-                    <button type="button" class="close" onClick="deletePrediction({{ prediction.id }})">
-                         <span aria-hidden="true">&times;</span>
-                    </button>
-                {% endif %}
-            </li>
-          {% endif %}
-        {% endfor %}
-
-
-
-
     </div>
-</div>
+    </form>
+    {% for prediction in user.predictions %}
+        <li class="list-group-item">
+      {% if prediction.event == event %}
+            {{ prediction.rider_one }}
+            {{ prediction.rider_two }}
+            {{ prediction.rider_three }}
+            {% if starttimes[loop.index0] < time_now %}
+                <button type="button" class="close" onClick="deletePrediction({{ prediction.id }})">
+                     <span aria-hidden="true">&times;</span>
+                </button>
+            {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+{% endfor %}
 
-
-
-  <br />  <br />  <br />  <br />
 <div class="contain" align="center">
     <div class="box">
-        {% endfor %}
-
-          <br />  <br />  <br />  <br />
         <h4 allign="left">Alle evenementen die voorspeld moeten worden (en de deadlines daarachter). Zodra de startlijsten bekend zijn word het mogelijk de voorspellingen per afstand in te vullen.
         <br><br>
         {% for event in scheduled_events %}
