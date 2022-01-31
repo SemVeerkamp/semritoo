@@ -18,9 +18,9 @@
               <br> <br>
               {{ scheduled_starttimes[loop.index0] }}
               <br> <br>
-              {% if starttimes[loop.index0] < time_now %}
+              {% if scheduled_starttimes[loop.index0] < time_now %}
                 Time untill deadline:
-                {{ starttimes[loop.index0] - time_now }}
+                {{ scheduled_starttimes[loop.index0] - time_now }}
               {% endif %}
             </span>
              <select name='prediction' id="prediction"
