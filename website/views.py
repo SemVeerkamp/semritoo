@@ -12,6 +12,11 @@ from website.get_startlist import get_startlist
 from website.get_result import get_result
 from website.tournament import year, tag
 
+import ast
+with open('dict.txt') as f:
+    data = f.read()
+odds_dict = ast.literal_eval(data)
+
 views = Blueprint('views', __name__)
 
 startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
@@ -183,6 +188,12 @@ def spelregels():
                            )
 
 
+@views.route('/odds', methods=['GET', 'POST'])
+def odds():
+    return render_template("odds.html",
+                           user=current_user,
+                           odds_dict=odds_dict
+                           )
 
 # delete all the prediction from everybody (clean the database)
 #    predictions = Prediction.query.order_by(Prediction.id).all()
