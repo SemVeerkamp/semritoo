@@ -11,13 +11,12 @@ from datetime import timedelta
 from website.get_startlist import get_startlist
 from website.get_result import get_result
 from website.tournament import year, tag
-from website.get_odds import get_odds, get_html, url
 
 views = Blueprint('views', __name__)
 
 startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
 results, podium_pictures, result_times = get_result(year, tag)
-odds_dict = get_odds(url)
+
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -183,13 +182,6 @@ def spelregels():
                            user=current_user
                            )
 
-
-@views.route('/odds', methods=['GET', 'POST'])
-def odds():
-    return render_template("odds.html",
-                           user=current_user,
-                           odds_dict=odds_dict
-                           )
 
 
 # delete all the prediction from everybody (clean the database)
