@@ -23,5 +23,5 @@ yarg==0.1.9
 psycopg2-binary ==2.9.3
 python-dotenv==0.19.2
 beautifulsoup4==4.10.0
-requests-html==0.10.0
+requests_html==0.10.0
 gunicorn
