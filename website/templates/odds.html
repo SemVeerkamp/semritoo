@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Odds{% endblock %} {% block content%}
+
+<style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/w78rbBeXP6hh_KgybWhriJXE9sujuE9MnQ1Tql0NqBoMmRu10mIhgbuSDFmFF3GsPwKOZSx4b-31k46Q4nzOV_X6-lxZIz_vLm0GDxAJ7ZHCRb_Un0SPcf2cnWcqx1pffgmiWVVDFg=w2400');
+        background-repeat: no repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    .contain {
+        width: 100%;
+        height: 100%;
+}
+    .box {
+        border: 5px solid #fff;
+        border-radius: 10px;
+        padding: 0px;
+        width: 700px;
+        background-color: #fff;
+        opacity: 0.9;
+}
+</style>
+
+
+<div class="contain" align="center">
+    <div class="box">
+        {% for event in odds_dict %}
+        <h2 allign="left>">{{ event }}</h2>
+            {% for odds in odds_dict[event] %}
+                <h4 allign="center">{{ odds }}</h4>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
