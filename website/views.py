@@ -112,6 +112,9 @@ def stand():
     gold = 4
     silver = 2
     bronze = 1
+    first = 2
+    second = 1.5
+    third = 1
     scores = {}
     scores_per_user = {}
     users = User.query.order_by(User.name).all()
@@ -124,18 +127,36 @@ def stand():
     for prediction in predictions:
         for event in results:
             if prediction.event == event:
-                if prediction.rider_one == results[event][0] or prediction.rider_two == results[event][0] or \
-                        prediction.rider_three == results[event][0]:
-                    scores[prediction.user_name] += gold
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += gold
-                if prediction.rider_one == results[event][1] or prediction.rider_two == results[event][1] or \
-                        prediction.rider_three == results[event][1]:
-                    scores[prediction.user_name] += silver
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += silver
-                if prediction.rider_one == results[event][2] or prediction.rider_two == results[event][2] or \
-                        prediction.rider_three == results[event][2]:
-                    scores[prediction.user_name] += bronze
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += bronze
+                if prediction.rider_one == results[event][0]:
+                    scores[prediction.user_name] += first * gold
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * gold
+                if prediction.rider_two == results[event][0]:
+                    scores[prediction.user_name] += second * gold
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * gold
+                if prediction.rider_three == results[event][0]:
+                    scores[prediction.user_name] += third * gold
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * gold
+
+                if prediction.rider_one == results[event][1]:
+                    scores[prediction.user_name] += first * silver
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * silver
+                if prediction.rider_two == results[event][1]:
+                    scores[prediction.user_name] += second * silver
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * silver
+                if prediction.rider_three == results[event][1]:
+                    scores[prediction.user_name] += third * silver
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * silver
+                    
+                if prediction.rider_one == results[event][2]:
+                    scores[prediction.user_name] += first * bronze
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * bronze
+                if prediction.rider_two == results[event][2]:
+                    scores[prediction.user_name] += second * bronze
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * bronze
+                if prediction.rider_three == results[event][2]:
+                    scores[prediction.user_name] += third * bronze
+                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * bronze
+                    
     scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     users = list(scores_per_user.keys())
     events = list(scores_per_user.values())[0]
