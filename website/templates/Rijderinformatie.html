@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}Rijderinformatie{% endblock %} {% block content%}
+
+{% for event in startlist %}
+<button type="button" class="collapsible">{{ event.partition('_')[2] }}</button>
+<div class="content">
+<div class="contain" align="center">
+    <div class="box">
+
+        {% for i in range(numbers_list[event]|count) %}
+            <p><a href="https://live.isuresults.eu/profiles/{{ numbers_list[event][i] }}" target="_blank" rel="noopener noreferrer">{{ startlist[event][i] }}</a></p>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,24 +1,5 @@
-{% extends "base.html" %} {% block title %}De stand{% endblock %} {% block content %}
-
+{% extends "base.html" %} {% block title %}De Stand{% endblock %} {% block content %}
 <style>
-    body {
-        background-image: url('https://lh3.googleusercontent.com/uEGQLrm3FRQggtH6DsLICiAfbz3-EUmlJqq_WtJVBoPjblYx7KyhVrcUOKpP8wnMT5vXBOiHTuVGqZRjxAhhIENrR6NDRqZ58MF5nlp7IRmf4Rnz1HUOcTisFh9dWpGcd_CuxVmBEg=w2400');
-        background-repeat: no repeat;
-        background-size: cover;
-        background-attachment: fixed;
-    }
-    .contain {
-        width: 100%;
-        height: 100%;
-}
-    .box {
-        border: 1px solid #fff;
-        border-radius: 10px;
-        padding: 10px;
-        width: 500px;
-        background-color: #fff;
-        opacity: 0.75;
-}
     .box_legend {
         border: 1px solid #fff;
         border-radius: 10px;
@@ -51,7 +32,7 @@
     <thead>
         <tr>
             <th class="c1" style ="background-color: white">Gebruiker</th>
-            {% for event in scheduled_events %}
+            {% for event in events %}
             <th style ="background-color: white">{{ event}}</th>
             {% endfor %}
         </tr>

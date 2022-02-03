@@ -7,23 +7,8 @@
         background-size: cover;
         background-attachment: fixed;
     }
-    .contain {
-        width: 100%;
-        height: 100%;
-}
-    .box {
-        border: 1px solid #fff;
-        border-radius: 10px;
-        padding: 10px;
-        width: 1000px;
-        background-color: #fff;
-        opacity: 0.9;
-}
 </style>
 
-
-<div class="contain" align="center">
-    <div class="box">
 <h1 align="center">Bekijk hier alle voorspellingen</h1>
 <h4 align="left">Zodra de wedstrijd begonnen is (en de voorspellingen niet meer kunnen worden aangepast verschijnen hier alle voorspellingen</h4>
 <table>
@@ -32,15 +17,18 @@
     {{ event }}
     <br> <br>
   </span>
-    {% if starttimes[loop.index0] > time_now %}
+    {% if starttimes[loop.index0] < time_now %}
             {% for prediction in predictions %}
                 <li class="list-group-item">
                 {% if prediction.event == event %}
                     {{ prediction.user_name }}
                     :
-                    <br>            
-                    {{ prediction.rider_one }}                    
-                    {{ prediction.rider_two }}                    
+                    <br>
+                    1.
+                    {{ prediction.rider_one }}
+                    2.
+                    {{ prediction.rider_two }}
+                    3.
                     {{ prediction.rider_three }}
                 </li>
                 {% endif %}
@@ -50,6 +38,5 @@
 
 {% endfor %}
 </table>
-    </div>
-</div>
+
 {% endblock %}

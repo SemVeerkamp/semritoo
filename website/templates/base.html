@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -11,15 +17,57 @@
     />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"
+    crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css" />
+<link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous"
+/>
+
+      <style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/w78rbBeXP6hh_KgybWhriJXE9sujuE9MnQ1Tql0NqBoMmRu10mIhgbuSDFmFF3GsPwKOZSx4b-31k46Q4nzOV_X6-lxZIz_vLm0GDxAJ7ZHCRb_Un0SPcf2cnWcqx1pffgmiWVVDFg=w2400');
+        background-repeat: no repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    .contain {
+        width: 100%;
+        height: 100%;
+}
+    .box {
+        border: 5px solid #fff;
+        border-radius: 10px;
+        padding: 0px;
+        width: 700px;
+        background-color: #fff;
+        opacity: 0.9;
+}
+    .collapsible {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+}
+    .active, .collapsible:hover {
+        background-color: #ccc;
+
+}
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+}
+</style>
 
     <title>{% block title %}Home{% endblock %}</title>
   </head>
@@ -35,30 +83,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
-          {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="logout" href="/logout">Uitloggen</a>
-          <a class="nav-item nav-link" id="home" href="/">Voorspellen</a>
-          <a class="nav-time nav-link" id="odds" href="/odds">Odds</a>
-          <a class="nav-item nav-link" id="resultaten" href="/resultaten">Resultaten</a>
-          <a class="nav-item nav-link" id="voorspellingen" href="/voorspellingen">Voorspellingen</a>
-          <a class="nav-item nav-link" id="stand" href="/stand">De Tussenstand</a>
-          <a class="nav-time nav-link" id="refresh_prediction" href="/refresh_prediction">Ververs de data</a>
-          <a class="nav-item nav-link" id="spelregels" href="/spelregels">Spelregels</a>
-          {% else %}
-          <a class="nav-item nav-link" id="login" href="/login">Inloggen</a>
-          <a class="nav-item nav-link" id="signUp" href="/sign-up">Aanmelden</a>
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link" id="logout" href="/logout">Uitloggen</a>
+            <a class="nav-item nav-link" id="home" href="/">Voorspellen</a>
+            <a class="nav-item nav-link" id="resultaten" href="/resultaten">Resultaten</a>
+            <a class="nav-item nav-link" id="voorspellingen" href="/voorspellingen">Voorspellingen</a>
+            <a class="nav-item nav-link" id="stand" href="/stand">De stand</a>
+            <a class="nav-item nav-link" id="spelregels" href="/spelregels">Spelregels</a>
+            <a class="nav-time nav-link" id="refresh_prediction" href="/refresh_prediction">Ververs de data</a>
+            <a class="nav-time nav-link" id="odds" href="/odds">Odds</a>
+            <a class="nav-time nav-link" id="Rijderinformatie" href="/Rijderinformatie">Rijderinformatie</a>
+            {% else %}
+            <a class="nav-item nav-link" id="login" href="/login">Inloggen</a>
+            <a class="nav-item nav-link" id="signUp" href="/sign-up">Aanmelden</a>
           {% endif %}
         </div>
       </div>
     </nav>
 
-{% with messages = get_flashed_messages() %}
-   {% if messages %}
-      {% for message in messages %}
-         {{ message }}
-      {% endfor %}
-   {% endif %}
-{% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+   {{ message }}
+
+ {% endfor %} {% endif %} {% endwith %}
 
     <div class="container">{% block content %} {% endblock %}</div>
     <script
@@ -86,5 +134,21 @@
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"
     ></script>
+  <script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
   </body>
 </html>
