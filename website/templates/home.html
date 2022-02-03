@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
+{% extends "base.html" %} {% block title %}Mijn voorspellingen{% endblock %} {% block content%}
 
 
 <style>
@@ -6,7 +6,134 @@
         background-image: url('https://lh3.googleusercontent.com/w78rbBeXP6hh_KgybWhriJXE9sujuE9MnQ1Tql0NqBoMmRu10mIhgbuSDFmFF3GsPwKOZSx4b-31k46Q4nzOV_X6-lxZIz_vLm0GDxAJ7ZHCRb_Un0SPcf2cnWcqx1pffgmiWVVDFg=w2400');
         background-repeat: no repeat;
         background-size: cover;
+        background-attachment: fixed;{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
+
+<style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/w78rbBeXP6hh_KgybWhriJXE9sujuE9MnQ1Tql0NqBoMmRu10mIhgbuSDFmFF3GsPwKOZSx4b-31k46Q4nzOV_X6-lxZIz_vLm0GDxAJ7ZHCRb_Un0SPcf2cnWcqx1pffgmiWVVDFg=w2400');
+        background-repeat: no repeat;
+        background-size: cover;
         background-attachment: fixed;
+    }
+    .contain {
+        width: 100%;
+        height: 100%;
+}
+    .box {
+        border: 5px solid #fff;
+        border-radius: 10px;
+        padding: 0px;
+        width: 700px;
+        background-color: #fff;
+        opacity: 0.9;
+}
+</style>
+
+
+<div class="contain" align="center">
+    <div class="box">
+<h1 align="center">Vul hier je voorspellingen in</h1>
+<h4 align="left">Druk op veld 'nothing selected' achter het grijze veld met de afstand waarvan je een voorspelling wilt toevoegen</h4>
+<br>
+<h4 allign="left">Vink altijd het bovenste vakje met de afstand aan. Het is verplicht dit veld aan te klikken.</h4>
+<br>
+<h4 allign="left">Bevestig je keuze met de bevestigingsknop</h4>
+<br> <br>
+<h2 allign="left">Wil je je voospelling veranderen?</h2>
+<h4 align="left">Klik op het kruisje achter je voorspelling om je oude voorspelling te verwijderen. Zodra je de oude voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
+<br> <br> <br>
+    </div>
+</div>
+
+
+{% for event in startlist %}
+
+    <form class="form-horizontal" method="POST" role="form">
+        <div class="input-group">
+          <span class="input-group-addon">
+              {{ event.partition('_')[2] }}
+              <br> <br>
+              {{ scheduled_starttimes[loop.index0] }}
+              <br> <br>
+              {% if scheduled_starttimes[loop.index0] > time_now %}
+              Time untill deadline:
+                {{ scheduled_starttimes[loop.index0] - time_now }}
+              {% endif %}
+          </span>
+             <select
+                name='prediction' id="prediction"
+                class="selectpicker show-menu-arrow form-control"
+                multiple data-max-options="4"
+                data-live-search="true"
+                data-size="15"
+             >
+                <optgroup label = 'event'>
+                 <option value="{{ event }}">
+                     {{ event.partition('_')[2] }}
+                 </option>
+                </optgroup>
+                <optgroup label="1e keuze (telt 2x)">
+                    {% for i in range(startlist[event]|count) %}
+                    <option value="{{startlist[event][i]}}">
+                       {{ i+1 }}. {{startlist[event][i]}}
+                    </option>
+                    {% endfor %}
+                </optgroup>
+                <optgroup label="2e keuze (telt 1.5x)">
+                    {% for i in range(startlist[event]|count) %}
+                    <option value="{{startlist[event][i]}}">
+                       {{ i+1 }}. {{startlist[event][i]}}
+                    </option>
+                    {% endfor %}
+                 </optgroup>
+                <optgroup label="3e keuze (telt 1x)">
+                    {% for i in range(startlist[event]|count) %}
+                    <option value="{{startlist[event][i]}}">
+                       {{ i+1 }}. {{startlist[event][i]}}
+                    </option>
+                    {% endfor %}
+                </optgroup>
+            </select>
+        {% if scheduled_starttimes[loop.index0] < time_now %}
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" id="bevestigen">Bevestigen</button>
+            </span>
+        {% endif %}
+        </div>
+        </form>
+        {% for prediction in user.predictions %}
+            <li class="list-group-item">
+            {% if prediction.event == event %}
+                {{ prediction.rider_one }}
+                {{ prediction.rider_two }}
+                {{ prediction.rider_three }}
+                {% if starttimes[loop.index0] < time_now %}
+                    <button type="button" class="close" onClick="deletePrediction({{ prediction.id }})">
+                         <span aria-hidden="true">&times;</span>
+                    </button>
+                {% endif %}
+            </li>
+          {% endif %}
+
+
+{% endfor %}
+
+
+{% endfor %}
+
+<br>
+<div class="contain" align="center">
+    <div class="box">
+{% for event in scheduled_events %}
+    {{event}}<br> {{ scheduled_starttimes[loop.index0] }} <br>
+{% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
     }
     .contain {
         width: 100%;
