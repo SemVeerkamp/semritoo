@@ -15,6 +15,8 @@ def get_startlist(year, tag):
     # Get the startlists
     startlist = {}
     names = []
+    startnumbers = []
+    numbers_list = {}
     for i in range(len(scheduleNumbers)):
         quarter = "Quarter"
         semi = "Semi"
@@ -38,14 +40,18 @@ def get_startlist(year, tag):
                                             + response_startlist_dict[j]['competitor']['skater']['country']
                                             + ")"
                                             )
+                            number = str(response_startlist_dict[j]['competitor']['skater']['id'])
                             names.append(Full_name)
+                            startnumbers.append(number)
                             startlist[str("startlist_" + events[i])] = names
+                            numbers_list[str("startlist_" + events[i])] = startnumbers
         #                key2 = 'team'
         #                if key2 in response_startlist_dict[j]:
         #                    Full_name = str(response_startlist_dict[j]['team']['country'])
         #                    names.append(Full_name)
 
         names = []
+        startnumbers = []
     scheduled_events = []
     scheduled_starttimes = []
     quarter = 'Quarter'
@@ -57,4 +63,4 @@ def get_startlist(year, tag):
                 if team not in event:
                     scheduled_events.append(event)
                     scheduled_starttimes.append(starttimes[index])
-    return startlist, starttimes, events, scheduled_starttimes, scheduled_events
+    return startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list

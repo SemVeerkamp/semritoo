@@ -17,9 +17,10 @@ with open('dict.txt') as f:
     data = f.read()
 odds_dict = ast.literal_eval(data)
 
+
 views = Blueprint('views', __name__)
 
-startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
+startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
 results, podium_pictures, result_times = get_result(year, tag)
 
 
@@ -95,8 +96,7 @@ def uitslagen():
 @views.route('/voorspellingen', methods=['GET', 'POST'])
 def voorspellingen():
     time_now = datetime.utcnow()
-    time_now = time_now - timedelta(microseconds=time_now.microsecond)
-    time_now = time_now + timedelta(hours=1)
+    time_now = time_now + timedelta(days=-24)
     predictions = Prediction.query.order_by(Prediction.event).all()
     return render_template("voorspellingen.html",
                            startlist=startlist,
@@ -146,7 +146,7 @@ def stand():
                 if prediction.rider_three == results[event][1]:
                     scores[prediction.user_name] += third * silver
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += third * silver
-                    
+
                 if prediction.rider_one == results[event][2]:
                     scores[prediction.user_name] += first * bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += first * bronze
@@ -156,7 +156,7 @@ def stand():
                 if prediction.rider_three == results[event][2]:
                     scores[prediction.user_name] += third * bronze
                     scores_per_user[prediction.user_name][event.partition('_')[2]] += third * bronze
-                    
+
     scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     users = list(scores_per_user.keys())
     events = list(scores_per_user.values())[0]
@@ -174,7 +174,7 @@ def stand():
 
 @views.route('/refresh_prediction', methods=['GET', 'POST'])
 def refresh_predictions():
-    startlist, starttimes, events, scheduled_starttimes, scheduled_events = get_startlist(year, tag)
+    startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
     results, podium_pictures, result_times = get_result(year, tag)
     flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
     return render_template("refresh_prediction.html",
@@ -184,8 +184,7 @@ def refresh_predictions():
                            podium_pictures=podium_pictures,
                            user=current_user,
                            result_times=result_times,
-                           scheduled_events=scheduled_events,
-                           scheduled_starttimes=scheduled_starttimes
+                           numbers_list=numbers_list
                            )
 
 
@@ -208,13 +207,22 @@ def spelregels():
                            user=current_user
                            )
 
-
 @views.route('/odds', methods=['GET', 'POST'])
 def odds():
     return render_template("odds.html",
                            user=current_user,
                            odds_dict=odds_dict
                            )
+
+@views.route('/Rijderinformatie', methods=['GET', 'POST'])
+def Rijderinformatie():
+    return render_template("Rijderinformatie.html",
+                           user=current_user,
+                           startlist=startlist,
+                           scheduled_events=scheduled_events,
+                           numbers_list=numbers_list
+                           )
+
 
 # delete all the prediction from everybody (clean the database)
 #    predictions = Prediction.query.order_by(Prediction.id).all()
