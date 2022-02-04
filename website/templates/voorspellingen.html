@@ -14,7 +14,7 @@
 <table>
 {% for event in startlist %}
   <span class="input-group-addon">
-    {{ event }}
+    {{ event.partition('.')[0] }}
     <br>
   </span>
     {% if starttimes[loop.index0] < time_now %}
