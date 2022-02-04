@@ -7,12 +7,21 @@ import requests
 import json
 from datetime import datetime
 from datetime import timedelta
+import ast
 
 from website.get_startlist import get_startlist
 from website.get_result import get_result
 from website.tournament import year, tag
 
-import ast
+from website.get_startlist2 import url, get_event_list, get_starttimes, get_startlists
+
+startlist = get_startlists(url)
+events = get_event_list(url)
+starttimes = get_starttimes()
+scheduled_events = events
+scheduled_starttimes = starttimes
+
+
 with open('dict.txt') as f:
     data = f.read()
 odds_dict = ast.literal_eval(data)
@@ -20,8 +29,13 @@ odds_dict = ast.literal_eval(data)
 
 views = Blueprint('views', __name__)
 
-startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
-results, podium_pictures, result_times = get_result(year, tag)
+# startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
+
+# results, podium_pictures, result_times = get_result(year, tag)
+results = []
+podium_pictures = []
+result_times = []
+numbers_list = []
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -39,10 +53,7 @@ def home():
                 'Je hebt niet het goede aantal vakjes geselecteerd. Selecteer de afstand (bovenste veld) '
                 'en je drie schaatsers en probeer het opnieuw',
                 category='error')
-        elif len(prediction[0]) < 9:
-            flash("Selecteer eerst de startlist_afstand (en je drie rijders) voordat je je voorspelling opslaat",
-                  category='error')
-        elif prediction[0][9] != "_":
+        elif prediction[0][-4:] != ".htm":
             flash("Selecteer eerst de startlist_afstand (en je drie rijders) voordat je je voorspelling opslaat",
                   category='error')
         else:
