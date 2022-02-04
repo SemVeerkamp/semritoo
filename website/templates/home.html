@@ -78,9 +78,9 @@
         {% for prediction in user.predictions %}
             <li class="list-group-item">
             {% if prediction.event == event %}
-                {{ prediction.rider_one }}
-                {{ prediction.rider_two }}
-                {{ prediction.rider_three }}
+                1.{{ prediction.rider_one }}
+                2.{{ prediction.rider_two }}
+                3.{{ prediction.rider_three }}
                 {% if starttimes[loop.index0] > time_now %}
                     <button type="button" class="close" onClick="deletePrediction({{ prediction.id }})">
                          <span aria-hidden="true">&times;</span>
