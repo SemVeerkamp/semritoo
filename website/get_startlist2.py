@@ -5,13 +5,15 @@ url = "https://olympics.com/en/beijing-2022/sports/speed-skating/"
 
 
 def get_event_list(url):
+    team = 'team'
     event_list = []
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     events = soup.find_all("a", class_="b2p-nav__link subtitle")
     for i in range(len(events)):
         event = events[i]['href'][88:]
-        event_list.append(event)
+        if team not in event:
+            event_list.append(event)
     return event_list
 
 
@@ -61,7 +63,7 @@ def get_starttimes():
     l = datetime.datetime(2022, 2, 11, 9)
     m = datetime.datetime(2022, 2, 19, 8)
     n = datetime.datetime(2022, 2, 13, 14)
-    starttimes = (a,b,c,d,e,f,g,h,i,j,k,l,m,n)
+    starttimes = (a,b,c,d,e,f,h,i,j,k,l,m)
     return starttimes
 
 
