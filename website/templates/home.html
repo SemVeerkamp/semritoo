@@ -95,15 +95,5 @@
 
 {% endfor %}
 
-<br>
-<div class="contain" align="center">
-    <div class="box">
-{% for event in scheduled_events %}
-    {{event}}<br> {{ scheduled_starttimes[loop.index0] }} <br>
-{% endfor %}
-    </div>
-</div>
-
-
 
 {% endblock %}
