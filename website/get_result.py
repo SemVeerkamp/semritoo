@@ -69,8 +69,8 @@ def get_result(year, tag):
                                     times.append(time)
                             init_event = events[i].partition('0m')
                             results[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = names
-                            result_times[str(init_event[2]+'-s-'+init_event[0]+init_event[1]).lower()] = times
-                            podium_pictures[str(init_event[2]+'-s-'+init_event[0]+init_event[1]).lower()] = podium_event
+                            result_times[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = times
+                            podium_pictures[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = podium_event
         names = []
         podium_event = []
         times = []
