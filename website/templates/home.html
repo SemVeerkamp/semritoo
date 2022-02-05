@@ -11,22 +11,25 @@
 <br> <br>
 <h2 allign="left">Wil je je voospelling veranderen?</h2>
 <h4 align="left">Klik op het kruisje achter je voorspelling om je oude voorspelling te verwijderen. Zodra je de oude voorspelling hebt verwijderd kan je een nieuwe voorspelling toevoegen</h4>
-<br> <br> <br>
+<br>
     </div>
 </div>
-
+<br> <br>
 
 {% for event in startlist %}
     {% if scheduled_starttimes[loop.index0] > time_now %}
+    <button type="button" class="collapsible">{{ event.partition('.')[0] }}              Time untill deadline:
+                {{ scheduled_starttimes[loop.index0] - time_now }}</button>
+    <div class="content">
     <form class="form-horizontal" method="POST" role="form">
         <div class="input-group">
           <span class="input-group-addon">
               {{ event.partition('.')[0] }}
-              <br> <br>
+
               {{ scheduled_starttimes[loop.index0] }}
-              <br> <br>
+
               {% if scheduled_starttimes[loop.index0] > time_now %}
-              Tijd tot deadline:
+              Time untill deadline:
                 {{ scheduled_starttimes[loop.index0] - time_now }}
               {% endif %}
           </span>
@@ -40,8 +43,8 @@
                 data-container="body"
              >
                 <optgroup label = 'event'>
-                 <option value="{{ event.partition('.')[0] }}">
-                     {{ event }}
+                 <option value="{{ event }}">
+                     {{ event.partition('.')[0] }}
                  </option>
                 </optgroup>
                 <optgroup label="1e keuze (telt 2x)">
@@ -90,7 +93,7 @@
 
 
 
-
+</div>
 
 {% endfor %}
 
