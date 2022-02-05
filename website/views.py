@@ -15,10 +15,18 @@ from website.get_startlist import get_startlist
 from website.get_result import get_result
 from website.tournament import year, tag
 
-from website.get_startlist2 import url, get_event_list, get_starttimes, get_startlists
+from website.get_startlist2 import get_starttimes
 
-startlist = get_startlists(url)
-events = get_event_list(url)
+# startlist = get_startlists(url)
+#events = get_event_list(url)
+with open('event_list.txt') as f:
+    data = f.read()
+events = ast.literal_eval(data)
+
+with open('startlist.txt') as f:
+    data = f.read()
+startlist = ast.literal_eval(data)
+
 starttimes = get_starttimes()
 scheduled_events = events
 scheduled_starttimes = starttimes
