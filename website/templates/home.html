@@ -40,7 +40,7 @@
                 data-container="body"
              >
                 <optgroup label = 'event'>
-                 <option value="{{ event }}">
+                 <option value="{{ event.partition('.')[0] }}">
                      {{ event }}
                  </option>
                 </optgroup>
