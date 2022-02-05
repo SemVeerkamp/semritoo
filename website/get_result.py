@@ -35,42 +35,43 @@ def get_result(year, tag):
                 for j in range(len(response_result_dict)):
                     if response_result_dict[j]:
                         key = 'competitor'
-                        if key in response_result_dict[j]:
-                            if response_result_dict[j]['time'] is not None:
+                        if response_result_dict[j]['time'] is not None:
+                            if key in response_result_dict[j]:
+                                if response_result_dict[j]['time'] is not None:
 
-                                Full_name = str(response_result_dict[j]['competitor']['skater']['lastName']
-                                                + " "
-                                                + response_result_dict[j]['competitor']['skater']['firstName']
-#                                                + "   ("
-#                                                + response_result_dict[j]['competitor']['skater']['country']
-#                                                + ")"
-                                                )
-                                time = str(response_result_dict[j]['time']
-                                           )
-                                if j < 3:
-                                    podium_url = response_result_dict[j]['competitor']['skater']['photo']
-                                    podium_event.append(podium_url)
-                                    podium_url = None
-
-                                names.append(Full_name)
-                                times.append(time)
-                            else:
-                                key = 'competitor'
-                                if key in response_result_dict[j]:
                                     Full_name = str(response_result_dict[j]['competitor']['skater']['lastName']
                                                     + " "
                                                     + response_result_dict[j]['competitor']['skater']['firstName']
-#                                                    + "   ("
-#                                                    + response_result_dict[j]['competitor']['skater']['country']
-#                                                    + ") "
+    #                                                + "   ("
+    #                                                + response_result_dict[j]['competitor']['skater']['country']
+    #                                                + ")"
                                                     )
-                                    time = "geen tijd"
+                                    time = str(response_result_dict[j]['time']
+                                               )
+                                    if j < 3:
+                                        podium_url = response_result_dict[j]['competitor']['skater']['photo']
+                                        podium_event.append(podium_url)
+                                        podium_url = None
+
                                     names.append(Full_name)
                                     times.append(time)
-                            init_event = events[i].partition('0m')
-                            results[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = names
-                            result_times[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = times
-                            podium_pictures[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = podium_event
+                                else:
+                                    key = 'competitor'
+                                    if key in response_result_dict[j]:
+                                        Full_name = str(response_result_dict[j]['competitor']['skater']['lastName']
+                                                        + " "
+                                                        + response_result_dict[j]['competitor']['skater']['firstName']
+#                                                       + "   ("
+#                                                       + response_result_dict[j]['competitor']['skater']['country']
+#                                                       + ") "
+                                                        )
+                                        time = "geen tijd"
+                                        names.append(Full_name)
+                                        times.append(time)
+                                init_event = events[i].partition('0m')
+                                results[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = names
+                                result_times[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = times
+                                podium_pictures[str(init_event[2]+'-s-'+init_event[0]+init_event[1]+'.htm').lower()] = podium_event
         names = []
         podium_event = []
         times = []
