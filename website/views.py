@@ -3,11 +3,13 @@ from flask_login import login_required, current_user
 from website.models import *
 from website import db
 
+import ast
+
 import requests
 import json
 from datetime import datetime
 from datetime import timedelta
-import ast
+from bs4 import BeautifulSoup
 
 from website.get_startlist import get_startlist
 from website.get_result import get_result
@@ -20,7 +22,6 @@ events = get_event_list(url)
 starttimes = get_starttimes()
 scheduled_events = events
 scheduled_starttimes = starttimes
-
 
 with open('dict.txt') as f:
     data = f.read()
@@ -37,7 +38,6 @@ podium_pictures = []
 result_times = []
 numbers_list = []
 
-
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -53,6 +53,9 @@ def home():
                 'Je hebt niet het goede aantal vakjes geselecteerd. Selecteer de afstand (bovenste veld) '
                 'en je drie schaatsers en probeer het opnieuw',
                 category='error')
+        elif len(prediction[0]) < 9:
+            flash("Selecteer eerst de startlist_afstand (en je drie rijders) voordat je je voorspelling opslaat",
+                  category='error')
         elif prediction[0][-4:] != ".htm":
             flash("Selecteer eerst de startlist_afstand (en je drie rijders) voordat je je voorspelling opslaat",
                   category='error')
@@ -133,40 +136,40 @@ def stand():
         scores[user.name] = 0
         scores_per_user[user.name] = {}
         for event in results:
-            scores_per_user[user.name][event.partition('_')[2]] = 0
+            scores_per_user[user.name][event] = 0
     predictions = Prediction.query.order_by(Prediction.event).all()
     for prediction in predictions:
         for event in results:
             if prediction.event == event:
                 if prediction.rider_one == results[event][0]:
                     scores[prediction.user_name] += first * gold
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * gold
+                    scores_per_user[prediction.user_name][event] += first * gold
                 if prediction.rider_two == results[event][0]:
                     scores[prediction.user_name] += second * gold
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * gold
+                    scores_per_user[prediction.user_name][event] += second * gold
                 if prediction.rider_three == results[event][0]:
                     scores[prediction.user_name] += third * gold
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * gold
+                    scores_per_user[prediction.user_name][event] += third * gold
 
                 if prediction.rider_one == results[event][1]:
                     scores[prediction.user_name] += first * silver
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * silver
+                    scores_per_user[prediction.user_name][event] += first * silver
                 if prediction.rider_two == results[event][1]:
                     scores[prediction.user_name] += second * silver
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * silver
+                    scores_per_user[prediction.user_name][event] += second * silver
                 if prediction.rider_three == results[event][1]:
                     scores[prediction.user_name] += third * silver
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * silver
+                    scores_per_user[prediction.user_name][event] += third * silver
 
                 if prediction.rider_one == results[event][2]:
                     scores[prediction.user_name] += first * bronze
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += first * bronze
+                    scores_per_user[prediction.user_name][event] += first * bronze
                 if prediction.rider_two == results[event][2]:
                     scores[prediction.user_name] += second * bronze
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += second * bronze
+                    scores_per_user[prediction.user_name][event] += second * bronze
                 if prediction.rider_three == results[event][2]:
                     scores[prediction.user_name] += third * bronze
-                    scores_per_user[prediction.user_name][event.partition('_')[2]] += third * bronze
+                    scores_per_user[prediction.user_name][event] += third * bronze
 
     scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     users = list(scores_per_user.keys())
@@ -218,6 +221,7 @@ def spelregels():
                            user=current_user
                            )
 
+
 @views.route('/odds', methods=['GET', 'POST'])
 def odds():
     return render_template("odds.html",
@@ -227,6 +231,7 @@ def odds():
 
 @views.route('/Rijderinformatie', methods=['GET', 'POST'])
 def Rijderinformatie():
+
     return render_template("Rijderinformatie.html",
                            user=current_user,
                            startlist=startlist,
@@ -234,10 +239,3 @@ def Rijderinformatie():
                            numbers_list=numbers_list
                            )
 
-
-# delete all the prediction from everybody (clean the database)
-#    predictions = Prediction.query.order_by(Prediction.id).all()
-#    print(predictions)
-#    for prediction in predictions:
-#        db.session.delete(prediction)
-#        db.session.commit()
