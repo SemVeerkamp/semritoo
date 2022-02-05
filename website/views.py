@@ -138,7 +138,6 @@ def stand():
     predictions = Prediction.query.order_by(Prediction.event).all()
     for prediction in predictions:
         for event in results:
-            print(prediction.event, event)
             if prediction.event == event:
                 if prediction.rider_one.lower() == results[event][0].lower():
                     scores[prediction.user_name] += first * gold
