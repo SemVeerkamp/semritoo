@@ -26,12 +26,6 @@
           <span class="input-group-addon">
               {{ event.partition('.')[0] }}
 
-              {{ scheduled_starttimes[loop.index0] }}
-
-              {% if scheduled_starttimes[loop.index0] > time_now %}
-              Time untill deadline:
-                {{ scheduled_starttimes[loop.index0] - time_now }}
-              {% endif %}
           </span>
              <select
                 name='prediction' id="prediction"
