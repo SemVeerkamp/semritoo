@@ -26,7 +26,7 @@
               {{ scheduled_starttimes[loop.index0] }}
               <br> <br>
               {% if scheduled_starttimes[loop.index0] > time_now %}
-              Time untill deadline:
+              Tijd tot deadline:
                 {{ scheduled_starttimes[loop.index0] - time_now }}
               {% endif %}
           </span>
