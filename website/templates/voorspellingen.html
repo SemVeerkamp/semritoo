@@ -15,33 +15,27 @@
 {% for event in startlist %}
 <button type="button" class="collapsible">{{ event.partition('.')[0] }}</button>
 <div class="content">
-  <span class="input-group-addon">
-    {{ event.partition('.')[0] }}
-    <br>
-  </span>
     {% if starttimes[loop.index0] < time_now %}
             {% for prediction in predictions %}
-                <li class="list-group-item">
                 {% if prediction.event == event %}
-                    {{ prediction.user_name }}
+                    <h5>{{ prediction.user_name }}
                     :
-                    <br>
                     1.
                     {{ prediction.rider_one }}
                     2.
                     {{ prediction.rider_two }}
                     3.
-                    {{ prediction.rider_three }}
-                </li>
+                        {{ prediction.rider_three }} </h5>
+                        <br>
                 {% endif %}
                 {% endfor %}
     {% endif %}
         {% if starttimes[loop.index0] > time_now %}
+    <h5>Wie hebben er al voorspeld?</h5>
             {% for prediction in predictions %}
-                <li class="list-group-item">
                 {% if prediction.event == event %}
-                    {{ prediction.user_name }}
-                </li>
+                <h6>
+                    {{ prediction.user_name }}</h6>
                 {% endif %}
 
 
