@@ -5,4 +5,4 @@ port = int(os.environ.get('PORT', 33507))
 
 app = create_app()
 
-app.run(host='0.0.0.0', port=port)
+app.run(debug=True, port=port)
