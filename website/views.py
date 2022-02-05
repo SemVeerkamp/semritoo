@@ -9,7 +9,6 @@ import requests
 import json
 from datetime import datetime
 from datetime import timedelta
-from bs4 import BeautifulSoup
 
 from website.get_startlist import get_startlist
 from website.get_result import get_result
@@ -22,19 +21,20 @@ from website.get_startlist2 import get_starttimes
 with open('event_list.txt') as f:
     data = f.read()
 events = ast.literal_eval(data)
-
-with open('startlist.txt') as f:
-    data = f.read()
-startlist = ast.literal_eval(data)
-
 starttimes = get_starttimes()
-scheduled_events = events
-scheduled_starttimes = starttimes
+
 
 with open('dict.txt') as f:
     data = f.read()
 odds_dict = ast.literal_eval(data)
 
+with open('startlist.txt') as f:
+    data = f.read()
+startlist = ast.literal_eval(data)
+
+
+scheduled_events = events
+scheduled_starttimes = starttimes
 
 views = Blueprint('views', __name__)
 
@@ -112,11 +112,11 @@ def uitslagen():
                            result_times=result_times
                            )
 
+
 @views.route('/voorspellingen', methods=['GET', 'POST'])
 def voorspellingen():
     time_now = datetime.utcnow()
     time_now = time_now + timedelta(hours=1)
-    
     predictions = Prediction.query.order_by(Prediction.event).all()
     return render_template("voorspellingen.html",
                            startlist=startlist,
@@ -227,7 +227,6 @@ def spelregels():
                            user=current_user
                            )
 
-
 @views.route('/odds', methods=['GET', 'POST'])
 def odds():
     return render_template("odds.html",
@@ -245,3 +244,14 @@ def Rijderinformatie():
                            numbers_list=numbers_list
                            )
 
+
+# delete all the prediction from everybody (clean the database)
+#    predictions = Prediction.query.order_by(Prediction.id).all()
+#    print(predictions)
+#    for prediction in predictions:
+#        db.session.delete(prediction)
+#        db.session.commit()
+
+# delete a specific user
+#    user = User.query.filter(User.name == "Haastige Hein").delete()
+#    db.session.commit()
