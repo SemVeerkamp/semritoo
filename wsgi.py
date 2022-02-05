@@ -1,8 +1,8 @@
 from website import create_app
 import os
 
-port = int(os.environ.get('PORT', 33507))
+port = int(os.environ.get('PORT'))
 
 app = create_app()
 
-app.run(debug=True, port=port)
+app.run(host='0.0.0.0', port=port)
