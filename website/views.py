@@ -106,11 +106,11 @@ def uitslagen():
                            result_times=result_times
                            )
 
-
 @views.route('/voorspellingen', methods=['GET', 'POST'])
 def voorspellingen():
     time_now = datetime.utcnow()
     time_now = time_now + timedelta(hours=1)
+    
     predictions = Prediction.query.order_by(Prediction.event).all()
     return render_template("voorspellingen.html",
                            startlist=startlist,
