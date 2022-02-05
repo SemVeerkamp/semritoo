@@ -1,7 +1,7 @@
 from website import create_app
 import os
 
-port = int(os.environ.get('PORT', 33507))
+port = int(os.environ.get('PORT'))
 
 app = create_app()
 
