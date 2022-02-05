@@ -11,8 +11,10 @@
 
 <h1 align="center">Bekijk hier alle voorspellingen</h1>
 <h4 align="left">Zodra de wedstrijd begonnen is (en de voorspellingen niet meer kunnen worden aangepast verschijnen hier alle voorspellingen</h4>
-<table>
+
 {% for event in startlist %}
+<button type="button" class="collapsible">{{ event.partition('.')[0] }}</button>
+<div class="content">
   <span class="input-group-addon">
     {{ event.partition('.')[0] }}
     <br>
@@ -46,7 +48,7 @@
             {% endfor %}
     {% endif %}
 
+</div>
 {% endfor %}
-</table>
 
 {% endblock %}
