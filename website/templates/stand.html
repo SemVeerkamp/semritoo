@@ -33,7 +33,7 @@
         <tr>
             <th class="c1" style ="background-color: white">Gebruiker</th>
             {% for event in events %}
-            <th style ="background-color: white">{{ event}}</th>
+            <th style ="background-color: white">{{ event.partition('.')[0] }}</th>
             {% endfor %}
         </tr>
     </thead>
