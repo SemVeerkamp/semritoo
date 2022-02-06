@@ -194,17 +194,17 @@ def stand():
 
 @views.route('/refresh_prediction', methods=['GET', 'POST'])
 def refresh_predictions():
-    startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
+#    startlist, starttimes, events, scheduled_starttimes, scheduled_events, numbers_list = get_startlist(year, tag)
     results, podium_pictures, result_times = get_result(year, tag)
     flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
     return render_template("refresh_prediction.html",
-                           startlist=startlist,
-                           starttimes=starttimes,
+#                           startlist=startlist,
+#                           starttimes=starttimes,
                            results=results,
                            podium_pictures=podium_pictures,
                            user=current_user,
-                           result_times=result_times,
-                           numbers_list=numbers_list
+                           result_times=result_times
+#                           numbers_list=numbers_list
                            )
 
 
