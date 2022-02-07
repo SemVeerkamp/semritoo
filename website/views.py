@@ -205,6 +205,72 @@ def refresh_predictions():
                            )
 
 
+@views.route('/ververs_stand', methods=['GET', 'POST'])
+def ververs_stand():
+    results, podium_pictures, result_times = get_result(year, tag)
+    gold = 4
+    silver = 2
+    bronze = 1
+    first = 2
+    second = 1.5
+    third = 1
+    scores = {}
+    scores_per_user = {}
+    users = User.query.order_by(User.name).all()
+    for user in users:
+        scores[user.name] = 0
+        scores_per_user[user.name] = {}
+        for event in results:
+            scores_per_user[user.name][event] = 0
+    predictions = Prediction.query.order_by(Prediction.event).all()
+    for prediction in predictions:
+        for event in results:
+            if prediction.event == event:
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][0].lower()):
+                    scores[prediction.user_name] += first * gold
+                    scores_per_user[prediction.user_name][event] += first * gold
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][0].lower()):
+                    scores[prediction.user_name] += second * gold
+                    scores_per_user[prediction.user_name][event] += second * gold
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][0].lower()):
+                    scores[prediction.user_name] += third * gold
+                    scores_per_user[prediction.user_name][event] += third * gold
+
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][1].lower()):
+                    scores[prediction.user_name] += first * silver
+                    scores_per_user[prediction.user_name][event] += first * silver
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][1].lower()):
+                    scores[prediction.user_name] += second * silver
+                    scores_per_user[prediction.user_name][event] += second * silver
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][1].lower()):
+                    scores[prediction.user_name] += third * silver
+                    scores_per_user[prediction.user_name][event] += third * silver
+
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][2].lower()):
+                    scores[prediction.user_name] += first * bronze
+                    scores_per_user[prediction.user_name][event] += first * bronze
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][2].lower()):
+                    scores[prediction.user_name] += second * bronze
+                    scores_per_user[prediction.user_name][event] += second * bronze
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][2].lower()):
+                    scores[prediction.user_name] += third * bronze
+                    scores_per_user[prediction.user_name][event] += third * bronze
+
+    scores_sorted = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    users = list(scores_per_user.keys())
+    events = list(scores_per_user.values())[0]
+    flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
+    return render_template("stand.html",
+                           user=current_user,
+                           scores=scores_sorted,
+                           scores_per_user=scores_per_user,
+                           users=users,
+                           events=events,
+                           scheduled_events=scheduled_events,
+                           scheduled_starttimes=scheduled_starttimes
+                           )
+
+
 @views.route('/delete-prediction', methods=['POST'])
 def delete_prediction():
     prediction = json.loads(request.data)
