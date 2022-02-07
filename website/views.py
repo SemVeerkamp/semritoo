@@ -9,6 +9,7 @@ import requests
 import json
 from datetime import datetime
 from datetime import timedelta
+from unidecode import unidecode
 
 from website.get_startlist import get_startlist
 from website.get_result import get_result
@@ -147,33 +148,33 @@ def stand():
     for prediction in predictions:
         for event in results:
             if prediction.event == event:
-                if prediction.rider_one.lower() == results[event][0].lower():
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][0].lower()):
                     scores[prediction.user_name] += first * gold
                     scores_per_user[prediction.user_name][event] += first * gold
-                if prediction.rider_two.lower() == results[event][0].lower():
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][0].lower()):
                     scores[prediction.user_name] += second * gold
                     scores_per_user[prediction.user_name][event] += second * gold
-                if prediction.rider_three.lower() == results[event][0].lower():
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][0].lower()):
                     scores[prediction.user_name] += third * gold
                     scores_per_user[prediction.user_name][event] += third * gold
 
-                if prediction.rider_one.lower() == results[event][1].lower():
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][1].lower()):
                     scores[prediction.user_name] += first * silver
                     scores_per_user[prediction.user_name][event] += first * silver
-                if prediction.rider_two.lower() == results[event][1].lower():
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][1].lower()):
                     scores[prediction.user_name] += second * silver
                     scores_per_user[prediction.user_name][event] += second * silver
-                if prediction.rider_three.lower() == results[event][1].lower():
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][1].lower()):
                     scores[prediction.user_name] += third * silver
                     scores_per_user[prediction.user_name][event] += third * silver
 
-                if prediction.rider_one.lower() == results[event][2].lower():
+                if unidecode(prediction.rider_one.lower()) == unidecode(results[event][2].lower()):
                     scores[prediction.user_name] += first * bronze
                     scores_per_user[prediction.user_name][event] += first * bronze
-                if prediction.rider_two.lower() == results[event][2].lower():
+                if unidecode(prediction.rider_two.lower()) == unidecode(results[event][2].lower()):
                     scores[prediction.user_name] += second * bronze
                     scores_per_user[prediction.user_name][event] += second * bronze
-                if prediction.rider_three.lower() == results[event][2].lower():
+                if unidecode(prediction.rider_three.lower()) == unidecode(results[event][2].lower()):
                     scores[prediction.user_name] += third * bronze
                     scores_per_user[prediction.user_name][event] += third * bronze
 
@@ -196,7 +197,7 @@ def stand():
 def refresh_predictions():
     results, podium_pictures, result_times = get_result(year, tag)
     flash("De startlijsten, afstanden, starttijden en resultaten zijn opnieuw geladen", category="succes")
-    return render_template("refresh_prediction.html",
+    return render_template("uitslagen.html",
                            results=results,
                            podium_pictures=podium_pictures,
                            user=current_user,
