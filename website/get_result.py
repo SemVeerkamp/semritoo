@@ -36,7 +36,7 @@ def get_result(year, tag):
                     if response_result_dict[j]:
                         key = 'competitor'
                         if response_result_dict[j]['time'] is not None:
-                        if key in response_result_dict[j]:
+                            if key in response_result_dict[j]:
                                 if response_result_dict[j]['time'] is not None:
 
                                     Full_name = str(response_result_dict[j]['competitor']['skater']['lastName']
