@@ -35,7 +35,7 @@ def get_result(year, tag):
                 for j in range(len(response_result_dict)):
                     if response_result_dict[j]:
                         key = 'competitor'
-#                       if response_result_dict[j]['time'] is not None:
+                        if response_result_dict[j]['time'] is not None:
                         if key in response_result_dict[j]:
                                 if response_result_dict[j]['time'] is not None:
 
